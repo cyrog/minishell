@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 13:11:28 by cgross            #+#    #+#             */
-/*   Updated: 2023/05/22 16:46:05 by cgross           ###   ########.fr       */
+/*   Updated: 2023/05/23 14:37:03 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ char	**get_all_path() //getenv path and splits it
    
 	all_paths = ft_split(getenv("PATH"), ':');
 	if (all_paths == NULL)
+	{
+		ft_free(all_paths);
 		return (NULL);
+	}
 	else
 		return (all_paths);
 }
@@ -30,29 +33,30 @@ char *get_right_path(char *cmd) //finds right path for cmd
 	char	**all_paths;
 	char    *path;
 
-    i = -1;
-    all_paths = get_all_path();
-    while (all_paths && all_paths[++i])
-    {
-        temp = ft_strjoin(all_paths[i], "/");
-        path = ft_strjoin(temp, cmd);
-        if (access(path, X_OK != -1))
-        {
-            free(temp);
+	i = -1;
+	all_paths = get_all_path();
+	while (all_paths && all_paths[++i])
+	{
+		temp = ft_strjoin(all_paths[i], "/");
+		path = ft_strjoin(temp, cmd);
+		if (access(path, X_OK != -1))
+		{
+			free(temp);
 			ft_free(all_paths);
-            return (path);
-        }
-        free(path);
-        free(temp);
-    }
+			return (path);
+		}
+		free(path);
+		free(temp);
+	}
 	ft_free(all_paths);
-    return (NULL);
+	return (NULL);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	printf("path %s", get_right_path("ls"));
 }
+*/
 
 
 // get_env->all_path function return value

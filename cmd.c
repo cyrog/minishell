@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgross <cgross@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/22 16:46:48 by cgross            #+#    #+#             */
-/*   Updated: 2023/05/23 17:35:56 by cgross           ###   ########.fr       */
+/*   Created: 2023/05/23 15:05:18 by cgross            #+#    #+#             */
+/*   Updated: 2023/05/23 16:57:17 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init(t_data *data)
+char	**split_cmd(t_parse *parse, char *raw_cmd)
 {
-	data = (t_data*)malloc(sizeof(t_data));
-	if (!data)
-		return (1);
-	return (0);
-
+	parse->cmd = ft_split(raw_cmd, ' ');	
+	return (parse->cmd);
 }
