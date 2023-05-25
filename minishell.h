@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:19 by lobertho          #+#    #+#             */
-/*   Updated: 2023/05/25 14:56:05 by cgross           ###   ########.fr       */
+/*   Updated: 2023/05/25 16:35:12 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,10 @@ char	**ft_split(char const *s, char c);
 char	*get_right_path(char *cmd);
 
 char	*ft_strjoin(char const *s1, char const *s2);
+
+int		tokenizer(t_tok *head, char *input, int index);
+
+int		isaspace(char c);
+void	spaceindex(t_tok *tok, char *input)
 
 #endif 
