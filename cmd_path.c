@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 13:11:28 by cgross            #+#    #+#             */
-/*   Updated: 2023/05/23 14:37:03 by cgross           ###   ########.fr       */
+/*   Updated: 2023/05/25 15:28:00 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *get_right_path(char *cmd) //finds right path for cmd
 	{
 		temp = ft_strjoin(all_paths[i], "/");
 		path = ft_strjoin(temp, cmd);
-		if (access(path, X_OK != -1))
+		if (access(path, X_OK) != -1)
 		{
 			free(temp);
 			ft_free(all_paths);
@@ -54,7 +54,7 @@ char *get_right_path(char *cmd) //finds right path for cmd
 
 /*int	main(void)
 {
-	printf("path %s", get_right_path("ls"));
+	get_right_path("ls");
 }
 */
 

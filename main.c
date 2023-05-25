@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/05/23 17:56:55 by cgross           ###   ########.fr       */
+/*   Updated: 2023/05/25 15:24:25 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,19 @@ void	exec_cmd(char **envp, char *cmd)
 	else
 	{
 		//le processus enfant execute la commande ou exit si ca echoue
-		if (execve(get_right_path(cmd), &cmd, envp) == -1)
+		if (execve(get_right_path(cmd), cmd, envp) == -1)
 			perror("minishell");
 		exit(EXIT_FAILURE);
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_data *data;
 	char	*input;
 
+	(void)ac;
+	(void)av;
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (-1);
@@ -51,18 +53,8 @@ int	main(void)
 	while (input)
 	{
 		input = readline("minishell >> ");
-		//add_history(s->line);
-		//ft_lexer(s);
-		//exec_cmd(envp, "ls");
-		//ft_free(s->lexer);
-		printf("%s\n", input);
+		exec_cmd(envp, input); //testing
+		//printf("%s\n", input);
 	}
-
-	//some nice segfaults
-	/*data->parse->cmd = ft_split(input, ' ');
-	data->env->path = get_right_path(data->parse->cmd[0]);
-	printf("[%s]\n", data->env->path);
-	printf("[%s]\n", data->parse->cmd);
-	*/
 	return (0);
 }
