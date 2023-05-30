@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/05/25 15:24:25 by cgross           ###   ########.fr       */
+/*   Updated: 2023/05/30 16:59:31 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exec_cmd(char **envp, char *cmd)
 	else
 	{
 		//le processus enfant execute la commande ou exit si ca echoue
-		if (execve(get_right_path(cmd), cmd, envp) == -1)
+		if (execve(get_right_path(cmd), &cmd, envp) == -1)
 			perror("minishell");
 		exit(EXIT_FAILURE);
 	}
@@ -41,14 +41,10 @@ void	exec_cmd(char **envp, char *cmd)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data *data;
 	char	*input;
 
 	(void)ac;
 	(void)av;
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (-1);
 	input = "start";
 	while (input)
 	{
