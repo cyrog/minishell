@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 13:11:28 by cgross            #+#    #+#             */
-/*   Updated: 2023/05/25 15:28:00 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/20 12:40:47 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char *get_right_path(char *cmd) //finds right path for cmd
 		{
 			free(temp);
 			ft_free(all_paths);
+			printf("path: [%s]\n", path);
 			return (path);
 		}
 		free(path);

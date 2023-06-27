@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/05/30 16:59:31 by cgross           ###   ########.fr       */
+/*   Updated: 2023/06/27 13:06:52 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,24 @@ void	exec_cmd(char **envp, char *cmd)
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*input;
+	t_arg *arg;
+	int i = 0;
 
 	(void)ac;
 	(void)av;
-	input = "start";
-	while (input)
+	arg = malloc(sizeof(t_arg));
+	arg->input = NULL;
+	while (1)
 	{
-		input = readline("minishell >> ");
-		exec_cmd(envp, input); //testing
-		//printf("%s\n", input);
+		arg->input = readline("minishell >> ");
+		exec_cmd(envp, arg->input); //testing
+		printf("input: [%s]\n", arg->input);
+		while (arg->args[i++])
+		{
+			arg->args = get_args(arg);
+			printf("arg[i] : %s[%i]", arg->args[i], i);
+		}
+		printf("input: [%s]\n", arg->input);
 	}
 	return (0);
 }
