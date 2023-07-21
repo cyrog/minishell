@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:19 by lobertho          #+#    #+#             */
-/*   Updated: 2023/06/27 14:04:57 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/21 14:46:30 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+# include <stdbool.h>
 
-typedef struct	s_arg
+/*typedef struct	s_arg
 {
 	char			*input;
 	char			**pipsplit;
@@ -29,6 +30,15 @@ typedef struct	s_arg
 	char			*path;
 	struct s_arg	*next;
 }				t_arg;
+*/
+
+typedef struct	t_token
+{
+	char	*input;
+	char	*cmd;
+	char	*arg;
+	struct s_token	*next;
+}	t_token;
 
 void	exec_cmd(char **envp, char *cmd);
 void	ft_free(char **str);
@@ -43,8 +53,9 @@ char	*ft_strtrim(const char *s1, const char *set);
 
 int		isaspace(char c);
 
-t_arg 	*arg_init(t_arg *arg);
-
-char	**pip_split(t_arg *arg);
+//parsing
+bool	closed_quotes(char *input);
+void	parser(char *input);
+void	initok(t_token *tok);
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/06/27 13:06:52 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/21 14:48:59 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,22 @@ void	exec_cmd(char **envp, char *cmd)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_arg *arg;
-	int i = 0;
+	t_token	*tok;
+	//int i = 0;
 
 	(void)ac;
 	(void)av;
-	arg = malloc(sizeof(t_arg));
-	arg->input = NULL;
+	(void)envp;
+	tok = malloc(sizeof(t_token));
+	if (!tok)
+		return (0);
+	initok(tok);
 	while (1)
 	{
-		arg->input = readline("minishell >> ");
-		exec_cmd(envp, arg->input); //testing
-		printf("input: [%s]\n", arg->input);
-		while (arg->args[i++])
-		{
-			arg->args = get_args(arg);
-			printf("arg[i] : %s[%i]", arg->args[i], i);
-		}
-		printf("input: [%s]\n", arg->input);
+		tok->input = readline("minishell >> ");
+		//exec_cmd(envp, arg->input); //testing
+		parser(tok->input);
 	}
+	//need to free all tok
 	return (0);
 }

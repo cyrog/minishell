@@ -6,11 +6,11 @@
 #    By: cgross <cgross@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:59:33 by lobertho          #+#    #+#              #
-#    Updated: 2023/06/20 13:05:50 by cgross           ###   ########.fr        #
+#    Updated: 2023/07/21 14:45:26 by cgross           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c ft_split.c utils.c free.c cmd_path.c parsing.c
+SRCS = main.c ft_split.c utils.c free.c cmd_path.c parsing.c parsing_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
