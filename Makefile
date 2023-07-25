@@ -6,11 +6,12 @@
 #    By: cgross <cgross@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:59:33 by lobertho          #+#    #+#              #
-#    Updated: 2023/07/21 14:45:26 by cgross           ###   ########.fr        #
+#    Updated: 2023/07/25 15:02:25 by cgross           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c ft_split.c utils.c free.c cmd_path.c parsing.c parsing_utils.c
+SRCS = main.c ft_split.c utils.c free.c cmd_path.c parsing.c parsing_utils.c \
+tokenizer.c tokenizer_utils.c lists.c get_quote.c get.c
 
 OBJS = $(SRCS:.c=.o)
 

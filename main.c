@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/07/21 14:48:59 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/25 14:02:46 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char **envp)
 	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (0);
-	initok(tok);
 	while (1)
 	{
 		tok->input = readline("minishell >> ");

@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:19 by lobertho          #+#    #+#             */
-/*   Updated: 2023/07/21 14:46:30 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:02:11 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,31 @@
 }				t_arg;
 */
 
-typedef struct	t_token
+typedef struct	s_token
 {
+
+	int		type;
+	int		i;
+	int		pos;
 	char	*input;
 	char	*cmd;
-	char	*arg;
+	char	**arg;
 	struct s_token	*next;
 }	t_token;
+
+enum e_token
+{
+	COMMAND = 1,
+	ARG = 2,
+};
+
+typedef struct	s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*previous;
+	struct s_env	*next;
+}	t_env;
 
 void	exec_cmd(char **envp, char *cmd);
 void	ft_free(char **str);
@@ -56,6 +74,33 @@ int		isaspace(char c);
 //parsing
 bool	closed_quotes(char *input);
 void	parser(char *input);
-void	initok(t_token *tok);
+void	initok(t_token *tok, int index);
+
+//chained lists
+t_token *get_last(t_token *list);
+void	add_last(t_token **list, t_token *new);
+void	print_list(t_token *list);
+
+//tokenizer
+int		tokenizer(t_token **tok, char *input, int index);
+void	get_cmd(t_token *new, char *input);
+void	get_arg(t_token *new, char *input);
+int		word_len(char *input, int i);
+
+//tokenizer utils
+bool	is_redi(char c);
+bool	is_aspace(char c);
+bool	isdeli(char c, char flag);
+void	space_index(t_token *new, char *input);
+
+//get
+void	get_word(t_token *new, char *input);
+void	get_squote(t_token *new, char *input);
+void	get_dquote(t_token *new, char *input);
+
+//get_quote
+void	get_squote_cmd(t_token *new, char *input);
+void	get_dquote_cmd(t_token *new, char *input);
+
 
 #endif 
