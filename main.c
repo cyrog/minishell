@@ -6,7 +6,7 @@
 /*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/07/25 14:02:46 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:47:35 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	exec_cmd(char **envp, char *cmd)
 int	main(int ac, char **av, char **envp)
 {
 	t_token	*tok;
+	char	*input;
 	//int i = 0;
 
 	(void)ac;
@@ -52,9 +53,9 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	while (1)
 	{
-		tok->input = readline("minishell >> ");
+		input = readline("minishell >> ");
 		//exec_cmd(envp, arg->input); //testing
-		parser(tok->input);
+		parser(input, envp);
 	}
 	//need to free all tok
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cgross <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:00:31 by cgross            #+#    #+#             */
-/*   Updated: 2023/07/25 15:07:16 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:15:24 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	get_squote(t_token *new, char *input)
 	new->i++;
 //	add_tab(new, new->pos);
 	new->arg[new->pos] = malloc(sizeof(char) \
-	* (strcspn(input, "\'", new->i) + 2));
+	* (mystrcspn(input, "\'", new->i) + 2));
 	if (!new->arg[new->pos])
 	{
 		perror("Issue malloc get_squote");
@@ -81,4 +81,74 @@ void	get_dquote(t_token *new, char *input)
 	}
 	new->arg[new->pos][++j] = '\0';
 	new->i++;
+}
+
+/* just for the env var because it was too long */
+int	env_handler(t_token *new, char *input, int j)
+{
+	if (input[new->i - 1] != '"')
+	{
+		if (is_aspace(new->arg[new->pos][j]))
+			new->arg[new->pos][j] = '\0';
+		else
+			new->arg[new->pos][++j] = '\0';
+	}
+	if (new->flag == 3)
+		new->pos++;
+	new->arg[new->pos] = malloc(sizeof(char) \
+	* mystrcspn(input, " \t", new->i) + 1);
+	j = -1;
+	while (input[new->i] && !is_aspace(input[new->i]) && input[new->i] != '"')
+	{
+		new->arg[new->pos][++j] = input[new->i];
+		new->i++;
+	}
+	new->arg[new->pos][++j] = '\0';
+	new->arg[++new->pos] = malloc(sizeof(char) \
+	* mystrcspn(input, "\"", new->i) + 1);
+	if (is_aspace(input[new->i]) && input[new->i + 1] != '$')
+		new->i++;
+	j = -1;
+	return (j);
+}
+
+/**
+Returns the length of the initial segment
+of the string 's' that
+contains no characters from the string 'reject'.
+@param s Pointer to the string to search
+for characters not in 'reject'.
+@param reject Pointer to the string
+containing characters to reject.
+@return The length of the initial segment of
+'s' containing no characters from 'reject'.
+This function iterates over the characters in
+the string 's' until it finds
+a character that is also present in the string 'reject'.
+At that point, it returns the index of that
+character in the string 's', which
+represents the length of the initial segment of 's'
+containing no characters from 'reject'.
+If no characters in 's' are found to be in 'reject',
+the function returns the length of 's'.
+*/
+int	mystrcspn(char *s, char *reject, int i)
+{
+	int	j;
+	int	len;
+
+	len = 0;
+	while (s[i] != '\0')
+	{
+		j = 0;
+		while (reject[j] != '\0')
+		{
+			if (s[i] == reject[j])
+				return (len);
+			j++;
+		}
+		len++;
+		i++;
+	}
+	return (len + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: cgross <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:45:28 by cgross            #+#    #+#             */
-/*   Updated: 2023/07/25 14:54:11 by cgross           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:20:53 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	space_index(t_token *new, char *input)
 {
 	while (input[new->i] && is_aspace(input[new->i] == true))
 		new->i++;
-	printf("new->i after space_index: %d\n", new->i);
 }
