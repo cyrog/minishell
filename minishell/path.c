@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_path.c                                         :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross <cgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 13:11:28 by cgross            #+#    #+#             */
-/*   Updated: 2023/05/25 15:28:00 by cgross           ###   ########.fr       */
+/*   Created: 2023/08/21 16:24:52 by lobertho          #+#    #+#             */
+/*   Updated: 2023/08/21 16:25:39 by lobertho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,3 @@ char *get_right_path(char *cmd) //finds right path for cmd
 	ft_free(all_paths);
 	return (NULL);
 }
-
-/*int	main(void)
-{
-	get_right_path("ls");
-}
-*/
-
-
-// get_env->all_path function return value
- 
-/*int main(void)
-{
-	char **split_path = get_all_path();
-	int	i = 0;
-	while (split_path[i])
-	{
-		printf("path[i]	[%d] [%s]\n", i, split_path[i]);
-		i++;
-	}
-}
-*/
