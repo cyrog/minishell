@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/25 13:55:49 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:34:21 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	//memset(env, 0, sizeof(t_env));
 	(void)argv;
 	(void)argc;
-	input = "start";
+//	input = "start";
 	env = init_env(envp);
 	signalsinit();
 	//ft_env(env);
@@ -60,8 +60,11 @@ int	main(int argc, char **argv, char **envp)
 	//ft_echo("test salut", 0);
 	while (42)
 	{
-		if ((input = readline("minishell >> ")) == NULL)
-			ft_exit(env); // ctrl+d = exit
+		//if ((input = readline("minishell >> ")) == NULL)
+		//	ft_exit(env); // ctrl+d = exit
+		input = readline("minishell >> ");
+		if (input == NULL || input[0] == '\0')
+			continue;
 		parser(input, env);
 		add_history(input);
 		free(input);
