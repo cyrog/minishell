@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:31:28 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/25 14:16:31 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/28 18:02:39 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	parser(char	*input, t_env *envi)
 	{
 //		replace_usd(head);
 //		execution(head);
-		print_list(head);
+		exec_cmd(head);
+//		print_list(head);
 	}
 	free_token(&head);
 }

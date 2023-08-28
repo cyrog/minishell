@@ -6,13 +6,13 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/28 15:34:21 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/28 18:02:49 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cmd(char **cmd, char **envp)
+void	exec_cmd(t_token *token)
 {
 	int	pid = 0;
 	int status = 0;
@@ -27,8 +27,10 @@ void	exec_cmd(char **cmd, char **envp)
 	}
 	else
 	{
-		if (execve(get_right_path(*cmd), cmd, envp) == -1)
-			perror("shell");
+		if (isbuiltin(token) == 0)
+			exec_builtin(token);
+//		if (execve(get_right_path(*cmd), cmd, envp) == -1)
+//			perror("shell");
 		exit(EXIT_FAILURE);
 	}
 }

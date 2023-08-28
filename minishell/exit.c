@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:26:30 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/22 13:56:12 by lobertho         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:50:18 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_env *env)
+void	ft_exit(t_token *tok)
 {
-	ft_freeenv(env);
+	ft_freeenv(tok->env);
 	printf("exit\n");
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:19 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/25 14:22:36 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/28 17:12:00 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_token
 	char				**arg;
 	char				**g_env;
 	char				**arg_all;
+	t_env				*env;
 	struct s_token		*next;
 }				t_token;
 
@@ -69,10 +70,9 @@ enum e_token {
 	RR_RIGHT = 7,
 };
 
-void	ft_exit(t_env *env);
 void	ft_echo(char *str, int echon);
 void	if_dollar(t_env *env, char *str);
-void	exec_cmd(char **cmd, char **envp);
+void	exec_cmd(t_token *token);
 void	ft_free(char **str);
 void	free_token(t_token **token);
 void	free_double(t_token *token);
@@ -81,11 +81,14 @@ void	ft_pwd(void);
 void	ft_env(t_env *env);
 void	ft_export(t_env *env, char *name, char *value);
 void	ft_unset(t_env **env, char *name);
-void	ft_exit(t_env *env);
-void	ft_cd(t_env *env, char *str);
+void	ft_exit(t_token *tok);
+void	ft_cd(t_token *tok);
 void	signalsinit(void);
 void	ft_putstr_fd(char *s, int fd);
 void	add_tab(t_token *token, int new);
+int		isbuiltin(t_token *token);
+
+void	exec_builtin(t_token *token);
 
 t_env	*init_env(char **envp);
 

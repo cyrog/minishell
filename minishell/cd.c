@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 15:46:51 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/22 17:22:15 by lobertho         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:04:26 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,37 @@ char	*find_var(t_env *env, char *name)
 	return (NULL);
 }
 
-void	ft_cd(t_env *env, char *str)
+void	ft_cd(t_token *tok)
 {
 	char *cwd;
 
 	cwd = malloc(PATH_MAX);
 	getcwd(cwd, PATH_MAX);
-	if ((ft_strcmp(str, "~") == 0) || (ft_strcmp(str, "") == 0))
+	if ((ft_strcmp(tok->arg[0], "~") == 0) || (ft_strcmp(tok->arg[0], "") == 0))
 	{
-		if (chdir(find_var(env, "HOME")) != 0)
+		if (chdir(find_var(tok->env, "HOME")) != 0)
 		{
 			perror("$HOME error");
 			return;
 		}
 	}
-	else if (ft_strcmp(str, "-") == 0)
+	else if (ft_strcmp(tok->arg[0], "-") == 0)
 	{
-		if (chdir(find_var(env, "OLDPWD")) != 0)
+		if (chdir(find_var(tok->env, "OLDPWD")) != 0)
 		{
 			perror("$OLDPWD error");
 			return;
 		}
 	}
-    else if (chdir(str) != 0)
+    else if (chdir(tok->arg[0]) != 0)
 	{
 		perror("chdir error");
 		return;
 	}
-	ft_export(env, "OLDPWD", cwd);
+	ft_export(tok->env, "OLDPWD", cwd);
 	free(cwd);
 	cwd = malloc(PATH_MAX);
 	getcwd(cwd, PATH_MAX);
-	ft_export(env, "PWD", cwd);
+	ft_export(tok->env, "PWD", cwd);
 	free(cwd);
 }
