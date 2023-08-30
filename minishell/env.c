@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:04:49 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/28 17:11:23 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:06:50 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,38 @@ t_env	*init_env(char **envp)
 }
 
 //afficher l'environnement
-void	ft_env(t_env *env)
+int		ft_env(t_env *env, t_token *s)
 {
 	t_env *curr = env;
+
+	if (s->arg[0])
+		return (1);
 	while (curr != NULL)
 	{
 		printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
+	return (0);
 }
 
-// recuperer la valeur de la variable voulue et l'afficher
-void	if_dollar(t_env *env, char *str)
+char	*if_dollar(t_token *s, t_env *env, char *str)
 {
 	t_env *curr = env;
 
+	s->dollartemp = 0;
 	while (curr)
 	{
 		if (strcmp(curr->name, str) == 0)
 		{
-			printf("%s\n", curr->value);
-			return ;
+			free(str);
+			str = NULL;
+			str = ft_strdup(curr->value);
+			s->dollartemp = 1;
+			return (str);
 		}
 		if (!curr->next) 
 			break;
 		curr = curr->next;
 	}
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:19 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/28 17:12:00 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:10:12 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-int		globalv;
+extern int	globalv;
 
 typedef struct s_env
 {
@@ -40,7 +40,11 @@ typedef struct s_env
 
 typedef struct s_token
 {
+	int					issquote;
 	int					type;
+	int					sizearg;
+	int					dollartemp;
+	int					count;
 	int					flag;
 	int					error;
 	int					flag_env[100];
@@ -51,12 +55,13 @@ typedef struct s_token
 	int					file_type;
 	int					fdwrite;
 	int					fdread;
+	char				*exportname;
+	char				*exportvalue;
 	char				*end_of_file;
 	char				*cmd;
 	char				**arg;
 	char				**g_env;
 	char				**arg_all;
-	t_env				*env;
 	struct s_token		*next;
 }				t_token;
 
@@ -70,29 +75,34 @@ enum e_token {
 	RR_RIGHT = 7,
 };
 
+void	ft_exit(t_env *env);
 void	ft_echo(char *str, int echon);
-void	if_dollar(t_env *env, char *str);
-void	exec_cmd(t_token *token);
+void	exec_cmd(char **cmd, char **envp);
 void	ft_free(char **str);
 void	free_token(t_token **token);
 void	free_double(t_token *token);
 void	ft_freeenv(t_env *env);
-void	ft_pwd(void);
-void	ft_env(t_env *env);
+int		ft_pwd(void);
+int		ft_env(t_env *env, t_token *s);
 void	ft_export(t_env *env, char *name, char *value);
 void	ft_unset(t_env **env, char *name);
-void	ft_exit(t_token *tok);
-void	ft_cd(t_token *tok);
+void	ft_exit(t_env *env);
+int		ft_cd(t_env *env, char *str);
+int		ft_cd_parse(t_token *s, t_env *env);
 void	signalsinit(void);
 void	ft_putstr_fd(char *s, int fd);
 void	add_tab(t_token *token, int new);
-int		isbuiltin(t_token *token);
-
-void	exec_builtin(t_token *token);
+int		exec_builtin(t_token *s, t_env *env);
+int		ft_export_parse(t_token *s, t_env *env);
+void	ft_unset_parse(t_token *s, t_env *env);
+int		ft_echo_parse(t_token *s, t_env *env);
+void	execution(t_token *s, t_env *env);
+void	parse_exec(t_token *s);
 
 t_env	*init_env(char **envp);
 
 size_t	ft_strlen(const char *s);
+char	*ft_itoa(int n);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**get_all_path();
@@ -101,8 +111,20 @@ char	*ft_strdup(const char *s1);
 char 	*ft_splitname(char *str);
 char 	*ft_splitvalue(char *str);
 char	**ft_split(char const *s, char c);
+char	*ft_dechar(char **str);
+char	*ft_echon(char **str, int i);
+char	*if_dollar(t_token *s, t_env *env, char *str);
+char	*ft_finddollar(t_token *s, t_env *env, char *str);
+char	*ft_putdollar(t_token *s, t_env *env, char *str, int len);
+char	*ft_jenpeuxplus(t_token *s, char *str, char *dollar);
+void	ft_freeall(char **str);
 
+int	is_builtin(t_token *s);
+int	ft_fulllen(char **str, int i);
 int	ft_strcmp(char *s1, char *s2);
+int	ft_arglen(t_token *s);
+
+void	replace_dollar(t_token *tok);
 
 //tokenizer.c
 int				sequencer(t_token **head, char *input, t_env *envi, int index);
@@ -154,7 +176,7 @@ char			*get_filename(t_token *new, char *input);
 //parser.c
 
 bool			check_quotes(char *input);
-void			parser(char *input, t_env *envi);
+void			parser(char	*input, t_env *envi);
 void			initialize_sequence(t_token *new, t_env *envi, int index);
 
 #endif 

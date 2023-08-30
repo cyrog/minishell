@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   rep_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgross <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 14:26:30 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/30 15:37:40 by cgross           ###   ########.fr       */
+/*   Created: 2023/08/30 16:11:26 by cgross            #+#    #+#             */
+/*   Updated: 2023/08/30 17:58:46 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_env *env)
+void	replace_dollar(t_token *tok)
 {
-	ft_freeenv(env);
-	printf("exit\n");
-	exit(EXIT_SUCCESS);
-}
+	int	i;
 
+	i = 0;
+	while (tok->arg[i])
+	{
+		if (tok->arg[i][0] == '$')
+		{
+			if (tok->arg[i][1] == '?')
+			{
+				free(tok->arg[i]);
+				tok->arg[i] = ft_itoa(globalv);
+			}
+		}
+		i++;
+	}
+}

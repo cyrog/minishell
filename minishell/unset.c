@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:13:59 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/23 18:02:29 by lobertho         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:36:01 by lobertho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,15 @@ void	ft_unset(t_env **env, char *name)
 			break;
 		curr = curr->next;
 	}
+}
+
+void	ft_unset_parse(t_token *s, t_env *env)
+{
+	char *str;
+
+	(void)env;
+	str = ft_dechar(s->arg);
+	printf("%s\n", str);
+	ft_unset(&env, str);
+	free(str);	
 }

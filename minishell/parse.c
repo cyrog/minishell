@@ -6,7 +6,7 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:31:28 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/28 18:02:39 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/30 17:50:30 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	check_quotes(char *input)
 
 void	parser(char	*input, t_env *envi)
 {
-	t_token	*head;
+	t_token *head;
 	int		i;
 
 	i = 0;
@@ -56,10 +56,9 @@ void	parser(char	*input, t_env *envi)
 	}
 	if (!head->error)
 	{
-//		replace_usd(head);
-//		execution(head);
-		exec_cmd(head);
-//		print_list(head);
+		replace_dollar(head);
+		execution(head, envi);
+		//print_list(head);
 	}
 	free_token(&head);
 }
@@ -67,6 +66,7 @@ void	parser(char	*input, t_env *envi)
 void	initialize_sequence(t_token *new, t_env *envi, int index)
 {
 	new->cmd = NULL;
+	new->issquote = 0;
 	new->arg = NULL;
 	new->next = NULL;
 	new->flag_env[0] = -1;

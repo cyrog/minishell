@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:38:44 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/23 15:52:05 by lobertho         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:15:26 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,18 @@ void	ft_export(t_env *env, char *name, char *value)
 	new_var->next = NULL;
 	curr->next = new_var;
 	curr->next->previous = curr;
+}
+
+int		ft_export_parse(t_token *s, t_env *env)
+{
+	char *str;
+
+	str = ft_dechar(s->arg);
+	s->exportname = ft_splitname(str);
+	s->exportvalue = ft_splitvalue(str);
+	free(str);
+	ft_export(env, s->exportname, s->exportvalue);
+	free(s->exportname);
+	free(s->exportvalue);
+	return (0);
 }

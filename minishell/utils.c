@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:43:58 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/22 17:57:38 by lobertho         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:57:23 by lobertho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,23 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+char	*ft_dechar(char **str)
+{
+	char	*newstr;
+	int		i;
+
+	i = 0;
+	while (str[0][i] != '\0')
+		i++;
+	newstr = malloc(sizeof(char) * i + 1);
+	i = 0;
+	while (str[0][i] != '\0')
+	{
+		newstr[i] = str[0][i];
+		i++;
+	}
+	newstr[i] = '\0';
+	return (newstr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertho <lobertho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 15:46:51 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/28 18:04:26 by cgross           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:08:27 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,55 @@ char	*find_var(t_env *env, char *name)
 	return (NULL);
 }
 
-void	ft_cd(t_token *tok)
+int		ft_cd(t_env *env, char *str)
 {
 	char *cwd;
 
 	cwd = malloc(PATH_MAX);
 	getcwd(cwd, PATH_MAX);
-	if ((ft_strcmp(tok->arg[0], "~") == 0) || (ft_strcmp(tok->arg[0], "") == 0))
+	if ((ft_strcmp(str, "~") == 0) || (ft_strcmp(str, "") == 0))
 	{
-		if (chdir(find_var(tok->env, "HOME")) != 0)
+		if (chdir(find_var(env, "HOME")) != 0)
 		{
 			perror("$HOME error");
-			return;
+			return (1);
 		}
 	}
-	else if (ft_strcmp(tok->arg[0], "-") == 0)
+	else if (ft_strcmp(str, "-") == 0)
 	{
-		if (chdir(find_var(tok->env, "OLDPWD")) != 0)
+		if (chdir(find_var(env, "OLDPWD")) != 0)
 		{
 			perror("$OLDPWD error");
-			return;
+			return (1);
 		}
 	}
-    else if (chdir(tok->arg[0]) != 0)
+    else if (chdir(str) != 0)
 	{
 		perror("chdir error");
-		return;
+		return (1);
 	}
-	ft_export(tok->env, "OLDPWD", cwd);
+	ft_export(env, "OLDPWD", cwd);
 	free(cwd);
 	cwd = malloc(PATH_MAX);
 	getcwd(cwd, PATH_MAX);
-	ft_export(tok->env, "PWD", cwd);
+	ft_export(env, "PWD", cwd);
 	free(cwd);
+	return (0);
+}
+
+int		ft_cd_parse(t_token *s, t_env *env)
+{
+	char	*str;
+	int		ret;
+
+	ret = 0;
+	if (s->arg[0] == NULL)
+	{
+		ft_cd(env, "");
+		return (EXIT_SUCCESS);
+	}
+	str = ft_dechar(s->arg);
+	ret = ft_cd(env, str);
+	free(str);
+	return (ret);
 }
