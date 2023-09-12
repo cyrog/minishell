@@ -6,33 +6,22 @@
 /*   By: lobertho <lobertho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:51:06 by lobertho          #+#    #+#             */
-/*   Updated: 2023/08/30 18:10:14 by cgross           ###   ########.fr       */
+/*   Updated: 2023/09/12 16:41:09 by cgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	globalv = 0;
+int	g_globalv = 0;
 
-void	exec_cmd(char **cmd, char **envp)
+void	checkarg(int argc)
 {
-	int	pid = 0;
-	int status = 0;
-
-	pid = fork();
-	if (pid == -1)
-		perror("fork");
-	else if (pid > 0)
+	if (argc != 1)
 	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
+		printf("too many arguments\n");
+		exit(0);
 	}
-	else
-	{
-		if (execve(get_right_path(*cmd), cmd, envp) == -1)
-			perror("shell");
-		exit(EXIT_FAILURE);
-	}
+	return ;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -41,22 +30,24 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 
 	(void)argv;
-	(void)argc;
+	checkarg(argc);
 	env = init_env(envp);
+	init_termios();
 	signalsinit();
-	while (42)
+	input = "start";
+	while (input != NULL)
 	{
-		/*if ((input = readline("minishell >> ")) == NULL)
-			ft_exit(env);*/ // ctrl+d = exit
 		input = readline("minishell >> ");
-		if (input == NULL || input[0] == '\0')
-			continue;
-		parser(input, env);
-		add_history(input);
-		free(input);
+		if (!input)
+			ft_exit(env, 0);
+		else if (input[0] == '\0' || fullspace(input) == 0)
+			continue ;
+		else
+		{
+			parser(input, env);
+			add_history(input);
+			free(input);
+		}
 	}
-	free(input);
-	clear_history();
-	//free env
-	return (globalv);
+	return (g_globalv);
 }
